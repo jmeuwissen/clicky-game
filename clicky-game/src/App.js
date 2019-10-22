@@ -35,12 +35,14 @@ function clickHandler(event){
 }
 
 function loseGame() {
-  
+  setFeedback("You guessed incorrectly!");
+  resetGame();
 }
 
 function correctClickHandler(numClicked) {
   if(clickedPics.length === 12){
-
+    setFeedback("You Won!!!");
+    resetGame();
   }
   else{
     setFeedback("You guessed correctly!")
@@ -49,10 +51,16 @@ function correctClickHandler(numClicked) {
     // temp.push(numClicked);
     setClickedPics(clickedPics.push(numClicked));
     setScore(score + 1);
-    setShuffledPics(arrayShuffler(shuffledPics));
+    setShuffledPics(arrayShuffler(pics));
   }
 }
 
+function resetGame() {
+  setTopScore(score);
+  setScore(0);
+  setClickedPics([]);
+  setShuffledPics(arrayShuffler(pics));
+}
 
 const pics = [
   
@@ -74,8 +82,10 @@ const pics = [
 
 function App() {
   const [shuffledPics, setShuffledPics] = useState(arrayShuffler(pics));
-  const [clickedPics, setClickedPics] = useState("");
+  const [clickedPics, setClickedPics] = useState([]);
   const [score, setScore] = useState(0);
+  const [feedback, setFeedback] = useState("Click an image to begin!");
+  const [topScore, setTopScore] = useState(0);
   return (
     <div className="App">
       <header className="App-header">
